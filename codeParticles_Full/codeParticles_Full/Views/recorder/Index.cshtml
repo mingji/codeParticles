@@ -1,0 +1,182 @@
+﻿@{
+    Layout = "_recordLayout.cshtml";
+}
+
+<head>
+    <title>CodeParticles</title>
+<link href="~/Content/bootstrap2/css/bootstrap.css" rel="stylesheet" />
+<link href="~/dojo/dijit/themes/claro/claro.css" rel="stylesheet" />
+    <script src="~/Scripts/angular.js"></script>
+        <script src="~/js/homeIndex.js"></script>
+
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+
+	<style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow:hidden;
+
+
+            background-color:rgb(73, 67, 179);
+        }
+
+        li
+        {
+            list-style-type:none;
+        }
+	    a
+	    {
+            color:black;
+	    }
+
+        #borderContainer {
+            width: 100%;
+            height: 100%;
+        }
+
+        #code{
+        height:100%;
+        width:100%;
+        padding:0px;
+        border:0px;
+
+        margin-top: -8px;
+        margin-right: -12px;
+        margin-bottom: -5px;
+        margin-left: -7px;
+        }
+        #preview{
+	        margin:0px;
+	        padding:0px;
+	        height: 100%;
+	        width: 100%;
+        }
+	    #myHeader
+	    {
+            margin-bottom:3px;
+	    }
+	</style>
+
+
+@*<script src="~/Scripts/codemirror-2.37/lib/codemirror.js"></script>
+<script src="~/Scripts/codemirror-2.37/mode/xml/xml.js"></script>
+<script src="~/Scripts/codemirror-2.37/mode/javascript/javascript.js"></script>
+<script src="~/Scripts/codemirror-2.37/mode/css/css.js"></script>
+<script src="~/Scripts/codemirror-2.37/mode/htmlmixed/htmlmixed.js"></script>
+<link href="~/Scripts/codemirror-2.37/lib/codemirror.css" rel="stylesheet" />
+*@
+
+    <script src="~/codeMirror/lib/codemirror.js"></script>
+    <script src="~/codeMirror/mode/xml/xml.js"></script>
+    <script src="~/codeMirror/mode/javascript/javascript.js"></script>
+    <script src="~/codeMirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="~/codeMirror/mode/css/css.js"></script>
+    <link href="~/codeMirror/lib/codemirror.css" rel="stylesheet" />
+
+
+	<script>dojoConfig = { parseOnLoad: true }</script>
+
+<script src="~/dojo/dojo/dojo.js"></script>
+<script src="~/Scripts/jquery-1.8.2.js"></script>
+
+	<script>
+	    require(["dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer"]);
+	</script>
+</head>
+<body class="claro" data-ng-controller="MainController">
+
+
+ <div id="myHeader" class="navbar navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+
+          <a class="brand" href="#">
+          	Code Particles
+          </a>
+
+          <div class="nav-collapse collapse">
+
+            <ul class="nav">
+              <li><a href="#about">New...</a></li><!--or maybe blank-->
+              <li><a href="#about">Browse</a></li>
+               <li><a href="#about">Edit Tags</a></li>
+
+
+              <li class="divider-vertical"></li>
+                <li><a href="/recorder/Index">Recorder</a></li>
+              <li class="divider-vertical"></li>
+            </ul>
+
+            <p class="navbar-text pull-right">
+              <a href="#" class="navbar-link">Register</a>
+              <span class="divider-vertical"></span>
+              <a href="#" class="navbar-link">Login</a>
+            </p>
+
+          </div><!-- end .nav-collapse -->
+
+        </div>
+      </div>
+    </div>
+
+
+    <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'sidebar', gutters:true, liveSplitters:true" id="borderContainer" class="myClass">
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'leading'" style="width: 300px;" class="myClass"></div>
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'center'" style="width: 700px;" class="myClass">
+            <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="gutters:true, liveSplitters:true" id="borderContainer2" class="myClass">
+                <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'top'"  style="height: 300px; width:500px" class="myClass">
+                    <div id="topper" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="gutters:true, liveSplitters:true" id="borderContainer3" class="myClass">
+                          <div id="items"  data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'left'"  style="height: 100%; width:1.5%" class="myClass">
+                              <ul style="margin-left:0px">
+                                  <li class="active"><a href="#"><i class="fa fa-upload fa-fw"></i></a></li>
+                                  <li class="active" data-ng-click="downloader()"><a href="#"><i class="fa fa-download fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-edit fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-check fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-cog fa-fw"></i></a></li>
+
+                                  <li class="active"><a href="#"><i class="fa fa-facebook-square fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-twitter fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-github fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-stack-overflow fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-envelope fa-fw"></i></a></li>
+               
+                               </ul>
+                        </div>
+                        
+                        <div id="coder"  data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'center'"  style="height: 100%; width:50%" class="myClass">
+                            <textarea id="code">@*@Html.Partial("_code")*@</textarea>
+                        </div>
+                        <div id="tagger"  data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'right'"  style="height: 100%; width:48.5%" class="myClass">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div id="outputter" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'center'"  style="height: 300px; width:500px" class="myClass">
+                   @* @Html.Partial("Home/_output")*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+     
+</body>
+
+<script>
+    //layout
+    $(document).ready(function () {
+
+
+    });
+
+
+
+
+</script>
+
+@Html.Partial("_recordScript");<!--I have to add run, save buttons, etc.-->
+
+@*@Html.Partial("_cMScript");*@
+<script src="~/Content/bootstrap2/js/bootstrap.js"></script>
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />

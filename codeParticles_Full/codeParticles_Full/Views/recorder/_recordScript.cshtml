@@ -1,0 +1,86 @@
+﻿<script>
+    $(document).ready(function(){
+          //setTimeout(starter, 3000);
+         //function starter(){
+         $('#code').focus();
+         $('#code').val("fuck");
+    });
+
+
+var delay;
+var tmpText;
+var Playback = {
+    //store the time an action occured and the resulting state in an object
+    //don't use an array because they are not sparce - interstitial keys
+    //will have to be iterated over
+    record: {},
+    init: function( recorderId, replayId, saveId ) {
+        this.recorder = document.getElementById( recorderId );
+        this.replay = document.getElementById( replayId );
+        this.save = document.getElementById( saveId );
+
+        this.recorder.addEventListener( 'focus', function() {
+            Playback.record = {};
+            this.value = '';
+        }, false );
+
+        this.save.addEventListener( 'click', function( e ) {
+            localStorage.setItem('playbackObject', JSON.stringify(Playback.record));
+            localStorage.setItem('lastObject', JSON.stringify(editor.getValue()));
+        }, false);
+
+        this.replay.addEventListener( 'click', function( e ) {
+            editor.setValue('');
+            Playback.restoreObj = JSON.parse(localStorage.getItem('playbackObject'));
+            var lastObject = JSON.parse(localStorage.getItem('lastObject'));
+            //store the time the sequence started
+            //so that we can subtract it from subsequent actions
+            var mark = null;
+            for( var t in  Playback.restoreObj ) {
+                if( mark ) {
+                    var timeout = t - mark;
+                } else {
+                    var timeout = 0;
+                    mark = t;
+                }
+                // We need to create a callback which closes over the value of t
+                // because t would have changed by the time this is run
+                setTimeout( Playback.changeValueCallback( Playback.restoreObj[t] ), timeout );
+            }
+            updatePreview(lastObject);
+        }, false );
+
+    },
+
+    changeValueCallback: function( val ) {
+        return function() {
+            editor.setValue(val);
+            updatePreview(val);
+        }
+    }
+}
+    // Initialize CodeMirror editor with a nice html5 canvas demo.
+    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+        mode: 'text/html',
+        tabMode: 'indent',
+        onKeyEvent: function (e, s) {
+            if (s.type == "keyup") {
+                tmpText = e.getValue();
+                Playback.record[ (new Date()).getTime() ] = tmpText;
+            }
+            updatePreview(tmpText);
+        }
+    });
+
+    function updatePreview(lastObj) {
+        var previewFrame = document.getElementById('preview');
+        var preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
+        preview.open();
+        preview.write(lastObj);
+        preview.close();
+    }
+
+    Playback.init( 'code', 'run', 'save' );
+//    setTimeout(updatePreview, 3000);
+
+</script>

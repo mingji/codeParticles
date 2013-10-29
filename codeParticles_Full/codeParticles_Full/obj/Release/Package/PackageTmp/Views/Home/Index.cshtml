@@ -1,0 +1,257 @@
+﻿@{
+    ViewBag.Title = "CodeParticles";
+}
+
+<head>
+    <title>CodeParticles</title>
+<link href="~/Content/bootstrap2/css/bootstrap.css" rel="stylesheet" />
+<link href="~/dojo/dijit/themes/claro/claro.css" rel="stylesheet" />
+    <script src="~/Scripts/angular.js"></script>
+        <script src="~/js/homeIndex.js"></script>
+   
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+
+	<style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow:hidden;
+
+
+            background-color:rgb(73, 67, 179);
+        }
+
+        li
+        {
+            list-style-type:none;
+        }
+	    a
+	    {
+            color:black;
+	    }
+
+        #borderContainer {
+            width: 100%;
+            height: 100%;
+        }
+
+        #code{
+            
+        height:100%;
+        width:100%;
+        padding:0px;
+        border:0px;
+        
+        //margin-top: -8px;
+        margin-right: -12px;
+        margin-bottom: -5px;
+        margin-left: -7px;
+        }
+        #preview{
+	        margin:0px;
+	        padding:0px;
+	        height: 100%;
+	        width: 100%;
+        }
+	    #myHeader
+	    {
+            margin-bottom:3px;
+	    }
+	</style>
+
+@*    <script src="~/codeMirror/lib/codemirror.js"></script>
+    <script src="~/codeMirror/mode/xml/xml.js"></script>
+    <script src="~/codeMirror/mode/javascript/javascript.js"></script>
+    <script src="~/codeMirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="~/codeMirror/mode/css/css.js"></script>
+    <link href="~/codeMirror/lib/codemirror.css" rel="stylesheet" />*@
+
+
+	<script>dojoConfig = {parseOnLoad: true}</script>
+
+<script src="~/dojo/dojo/dojo.js"></script>
+<script src="~/Scripts/jquery-1.8.2.js"></script>
+
+	<script>
+	    require(["dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer"]);
+	</script>
+</head>
+<body class="claro" data-ng-controller="MainController">
+
+
+ <div id="myHeader" class="navbar navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+
+          <a class="brand" href="#">
+          	Code Particles
+          </a>
+
+          <div class="nav-collapse collapse">
+
+            <ul class="nav">
+              <li><a href="#about">New...</a></li><!--or maybe blank-->
+              <li><a href="#about">Browse</a></li>
+               <li><a href="#about">Edit Tags</a></li>
+
+
+              <li class="divider-vertical"></li>
+                <li><a href="/recorder/Index">Recorder</a></li>
+              <li class="divider-vertical"></li>
+            </ul>
+
+            <p class="navbar-text pull-right">
+              <a href="#" class="navbar-link">Register</a>
+              <span class="divider-vertical"></span>
+              <a href="#" class="navbar-link">Login</a>
+            </p>
+
+          </div><!-- end .nav-collapse -->
+
+        </div>
+      </div>
+    </div>
+
+
+    <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'sidebar', gutters:true, liveSplitters:true" id="borderContainer" class="myClass">
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'leading'" style="width: 300px;" class="myClass"></div>
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'center'" style="width: 700px;" class="myClass">
+            <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="gutters:true, liveSplitters:true" id="borderContainer2" class="myClass">
+                <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'top'"  style="height: 300px; width:500px" class="myClass">
+                    <div id="topper" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="gutters:true, liveSplitters:true" id="borderContainer3" class="myClass">
+                          <div id="items"  data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'left'"  style="height: 100%; width:1.5%" class="myClass">
+                              <ul style="margin-left:0px">
+                                  <li class="active"><a href="#"><i class="fa fa-upload fa-fw"></i></a></li>
+                                  <li class="active" data-ng-click="downloader()"><a href="#"><i class="fa fa-download fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-edit fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-check fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-cog fa-fw"></i></a></li>
+
+                                  <li class="active"><a href="#"><i class="fa fa-facebook-square fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-twitter fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-github fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-stack-overflow fa-fw"></i></a></li>
+                                  <li class="active"><a href="#"><i class="fa fa-envelope fa-fw"></i></a></li>
+               
+                               </ul>
+                        </div>
+                        
+                        <div id="coder"  data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'center'"  style="height: 100%; width:50%" class="myClass">
+                            
+                            <div id="code" name="code"></div>
+                            <!--<textarea id="code">@*@Html.Partial("_code")*@</textarea>-->
+                        </div>
+                        <div id="tagger"  data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'right'"  style="height: 100%; width:48.5%" class="myClass">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div id="outputter" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'center'"  style="height: 300px; width:500px" class="myClass">
+                    @Html.Partial("_output")
+                </div>
+            </div>
+        </div>
+    </div>
+
+     
+</body>
+ <script src="~/ace-builds/src-noconflict/ace.js"></script>
+<script>
+    //layout
+    $(document).ready(function () {
+
+
+
+        //var delay;
+        //var tmpText;
+        //var Playback = {
+        //    //store the time an action occured and the resulting state in an object
+        //    //don't use an array because they are not sparce - interstitial keys
+        //    //will have to be iterated over
+        //    record: {},
+        //    init: function (recorderId, replayId, saveId) {
+        //        this.recorder = document.getElementById(recorderId);
+        //        this.replay = document.getElementById(replayId);
+        //        this.save = document.getElementById(saveId);
+
+        //        this.recorder.addEventListener('focus', function () {
+        //            Playback.record = {};
+        //            this.value = '';
+        //        }, false);
+
+        //        this.save.addEventListener('click', function (e) {
+        //            localStorage.setItem('playbackObject', JSON.stringify(Playback.record));
+        //            localStorage.setItem('lastObject', JSON.stringify(editor.getValue()));
+        //        }, false);
+
+        //        this.replay.addEventListener('click', function (e) {
+        //            editor.setValue('');
+        //            Playback.restoreObj = JSON.parse(localStorage.getItem('playbackObject'));
+        //            var lastObject = JSON.parse(localStorage.getItem('lastObject'));
+        //            //store the time the sequence started
+        //            //so that we can subtract it from subsequent actions
+        //            var mark = null;
+        //            for (var t in Playback.restoreObj) {
+        //                if (mark) {
+        //                    var timeout = t - mark;
+        //                } else {
+        //                    var timeout = 0;
+        //                    mark = t;
+        //                }
+        //                // We need to create a callback which closes over the value of t
+        //                // because t would have changed by the time this is run
+        //                setTimeout(Playback.changeValueCallback(Playback.restoreObj[t]), timeout);
+        //            }
+        //            updatePreview(lastObject);
+        //        }, false);
+
+        //    },
+
+        //    changeValueCallback: function (val) {
+        //        return function () {
+        //            editor.setValue(val);
+        //            editor.focus();
+        //            var n = editor.getSession().getValue().split("\n").length; // To count total no. of lines
+        //            editor.gotoLine(n);
+
+        //            updatePreview(val);
+        //        }
+        //    }
+        //}
+
+
+
+        function updatePreview(lastObj) {
+            var previewFrame = document.getElementById('preview');
+            var preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
+            preview.open();
+            preview.write(lastObj);
+            preview.close();
+        }
+
+        var editor = ace.edit("code");
+        editor.setTheme("ace/theme/textmate");
+        editor.getSession().setMode("ace/mode/html");
+
+        editor.getSession().on('change', function (e) {
+            // e.type, etc
+            var tmpText = editor.getValue();
+            //Playback.record[(new Date()).getTime()] = tmpText;
+            updatePreview(tmpText);
+        });
+
+        //Playback.init('code', 'run', 'save');
+        editor.focus();
+
+
+    });
+
+
+
+
+</script>
+
+@*@Html.Partial("_cMScript");*@
+<script src="~/Content/bootstrap2/js/bootstrap.js"></script>
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
