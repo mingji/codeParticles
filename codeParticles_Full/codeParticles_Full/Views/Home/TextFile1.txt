@@ -1,11 +1,14 @@
 ﻿@{
     ViewBag.Title = "CodeParticles";
 }
+
 <head>
+    <title>CodeParticles</title>
 <link href="~/Content/bootstrap2/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/dojo/dijit/themes/claro/claro.css" rel="stylesheet" />
-
-
+<link href="~/dojo/dijit/themes/claro/claro.css" rel="stylesheet" />
+    <script src="~/Scripts/angular.js"></script>
+        <script src="~/js/homeIndex.js"></script>
+   
     <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
 
 	<style type="text/css">
@@ -14,6 +17,8 @@
             height: 100%;
             margin: 0;
             overflow:hidden;
+
+
             background-color:rgb(73, 67, 179);
         }
 
@@ -38,7 +43,7 @@
         padding:0px;
         border:0px;
         
-  
+        //margin-top: -8px;
         margin-right: -12px;
         margin-bottom: -5px;
         margin-left: -7px;
@@ -53,52 +58,26 @@
 	    {
             margin-bottom:3px;
 	    }
-	    
-        #loadingOverlay {
-            background-color:#fff;
-            background-image:url('splash.png');
-
-            background-repeat:no-repeat;
-            background-position:center;
-            }
-
-		.pageOverlay {
-			top: 41px; /* hight of menu-bar (depends on the theme!). */
-			left: 0;
-			position: absolute;
-			height: 100%;
-			width: 100%;
-			z-index: 1001;
-			display: block;
-		}
-
-
-        .loadingMessage {
-            color: #999;
-            margin-top: 360px;
-            margin-left: 545px;
-        }
-        
 	</style>
 
-	<script>dojoConfig = { parseOnLoad: true }</script>
+@*    <script src="~/codeMirror/lib/codemirror.js"></script>
+    <script src="~/codeMirror/mode/xml/xml.js"></script>
+    <script src="~/codeMirror/mode/javascript/javascript.js"></script>
+    <script src="~/codeMirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="~/codeMirror/mode/css/css.js"></script>
+    <link href="~/codeMirror/lib/codemirror.css" rel="stylesheet" />*@
+
+
+	<script>dojoConfig = {parseOnLoad: true}</script>
+
+<script src="~/dojo/dojo/dojo.js"></script>
 <script src="~/Scripts/jquery-1.8.2.js"></script>
 
+	<script>
+	    require(["dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer"]);
+	</script>
 </head>
-
-<!--"Loading..." Overlay layer:-->
-
-<div id="loadingOverlay" class="loadingOverlay pageOverlay">
-    <div class="loadingMessage">
-<!--    	Initializing the awesome! -->
-    </div>
-</div>
-
-<!--"Loading..." Overlay function:-->
-<script>
-</script>
-
-<body class="claro" data-ng-controller="MainController" onLoad="splashHide();">
+<body class="claro" data-ng-controller="MainController">
 
 
  <div id="myHeader" class="navbar navbar-static-top">
@@ -133,55 +112,6 @@
         </div>
       </div>
     </div>
-
-    <script src="~/dojo/dojo/dojo.js"></script>
-
-<script>
-    require(["dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer"]);
-    var bc, cp1, cp2, cp3;
-    require([
-		"dojo/_base/array",
-		"dojo/aspect",
-		"dojo/dom",
-		"dojo/dom-style",
-		"dojo/json",
-		"dojo/on",
-		"dojo/parser",
-		"dijit/registry",
-		"dijit/layout/BorderContainer",
-		"dijit/layout/ContentPane",
-		"dijit/form/FilteringSelect",
-		"dojo/domReady!"
-    ], function (array, aspect, dom, domStyle, json, on, parser, registry, BorderContainer, ContentPane, FilteringSelect) {
-
-        parser.parse();
-        var bc = registry.byId("topper");
-        var spl = bc.getSplitter("right");
-
-        array.forEach(["right", "left"], function (region) {
-            var spl = bc.getSplitter(region);
-
-            aspect.after(spl, "_startDrag", function () {
-                editor.resize();
-
-            });
-            aspect.after(spl, "_stopDrag", function (evt) {
-                editor.resize();
-            });
-        })
-
-        bc = registry.byId("borderContainer2");
-        spl = bc.getSplitter("top");
-
-        aspect.after(spl, "_startDrag", function () {
-            editor.resize();
-
-        });
-        aspect.after(spl, "_stopDrag", function (evt) {
-            editor.resize();
-        });
-    });
-</script>
 
 
     <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'sidebar', gutters:true, liveSplitters:true" id="borderContainer" class="myClass">
@@ -218,7 +148,7 @@
                     </div>
                 </div>
                 <div id="outputter" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'center'"  style="height: 300px; width:500px" class="myClass">
-                    <iframe id="preview"></iframe>
+                    @Html.Partial("_output")
                 </div>
             </div>
         </div>
@@ -226,14 +156,13 @@
 
      
 </body>
-<script src="ace-builds/src-noconflict/ace.js"></script>
-
+ <script src="~/ace-builds/src-noconflict/ace.js"></script>
 <script>
-
-    var editor;
-
     //layout
     $(document).ready(function () {
+
+
+
         //var delay;
         //var tmpText;
         //var Playback = {
@@ -291,6 +220,8 @@
         //    }
         //}
 
+
+
         function updatePreview(lastObj) {
             var previewFrame = document.getElementById('preview');
             var preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
@@ -299,7 +230,7 @@
             preview.close();
         }
 
-        editor = ace.edit("code");
+        var editor = ace.edit("code");
         editor.setTheme("ace/theme/textmate");
         editor.getSession().setMode("ace/mode/html");
 
@@ -312,16 +243,17 @@
 
         //Playback.init('code', 'run', 'save');
         editor.focus();
+
+
+
+
     });
 
-    function splashHide() {
-        setTimeout(function () { $("#loadingOverlay").fadeOut(); }, 1500); // waits one second before fadeout.
-        editor.resize();
-    }
+
 
 
 </script>
 
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet" />
-<script src="~/Content/bootstrap2/js/bootstrap.min.js"></script>
+@*@Html.Partial("_cMScript");*@
+<script src="~/Content/bootstrap2/js/bootstrap.js"></script>
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
