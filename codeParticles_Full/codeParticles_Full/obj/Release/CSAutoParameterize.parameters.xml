@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=(LocalDb)\v11.0;Initial Catalog=aspnet-codeParticles_Full-20131021110055;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\aspnet-codeParticles_Full-20131021110055.mdf" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="D:\\Dropbox\\Visual\ Studio\ 2010\\Projects\\codeParticles_Full\\codeParticles_Full\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
-  </parameter>
-</parameters>
