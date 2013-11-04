@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "codeParticles_Full", "codeParticles_Full\codeParticles_Full.csproj", "{4BE672A3-C0CB-4DF4-8ABC-124A502B9357}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeParticles.DataModels", "CodeParticles.DataModels\CodeParticles.DataModels.csproj", "{504A90AB-6017-44DC-BE42-10F21F7A5CE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{4BE672A3-C0CB-4DF4-8ABC-124A502B9357}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BE672A3-C0CB-4DF4-8ABC-124A502B9357}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BE672A3-C0CB-4DF4-8ABC-124A502B9357}.Release|Any CPU.Build.0 = Release|Any CPU
+		{504A90AB-6017-44DC-BE42-10F21F7A5CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{504A90AB-6017-44DC-BE42-10F21F7A5CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{504A90AB-6017-44DC-BE42-10F21F7A5CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{504A90AB-6017-44DC-BE42-10F21F7A5CE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

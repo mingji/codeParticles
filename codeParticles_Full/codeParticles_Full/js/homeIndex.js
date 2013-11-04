@@ -5,11 +5,10 @@ function MainController($scope) {
 
     $scope.downloader = function () {
         //send ajax to download string that's currently in "code"
-
         $.ajax({
             type: 'post',
             url: "/download/Save",
-            data: { 'reportData': $("#code").val() },
+            data: { 'reportData': editor.getValue() },
             success: function (data) {
                 // We received token here. We need to go back to server with that token retrieve that file
                 var anchor = $("<iframe style='display:none;'></iframe>)").attr("src", "/download/GetFile?token=" + data);
@@ -23,6 +22,21 @@ function MainController($scope) {
 
     }
 
+    $scope.uploader = function () {
+        //send ajax to download string that's currently in "code"
+
+        $.ajax({
+            type: 'post',
+            url: "/download/Upload",
+            data: { 'reportData': editor.getValue() },
+            success: function (data) {
+                return true;
+            },
+            error: function (err) {
+                alert("error: " + err.responseText)
+            }
+        });
+    }
 
 }
 
