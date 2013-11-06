@@ -75,6 +75,8 @@ namespace codeParticles_Full.Controllers
         [HttpPost]
         public ActionResult Upload(string reportData)//, string fileName
         {
+            reportData = reportData ?? string.Empty;
+            string[] codeLines = reportData.Split(new string[] { "\n" }, StringSplitOptions.None);
             if (ModelState.IsValid)
             {
                 CodeElement codeElement = new CodeElement()
@@ -85,7 +87,7 @@ namespace codeParticles_Full.Controllers
                 db.CodeElements.Add(codeElement);
                 db.SaveChanges();
             }
-            return RedirectToAction("Index", "Home");
+            return Json(codeLines);
         }
     }
 }
