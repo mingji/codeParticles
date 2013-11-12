@@ -30,6 +30,7 @@ function MainController($scope) {
             url: "/download/Upload",
             data: { 'reportData': editor.getValue() },
             success: function (data) {
+                console.log(data);
                 return true;
             },
             error: function (err) {

@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using CodeParticles.DataModels;
 using CodeParticles.DataModels.Models;
+using codeParticles_Full.Parsers;
 
 namespace codeParticles_Full.Controllers
 {
@@ -77,6 +78,9 @@ namespace codeParticles_Full.Controllers
         {
             reportData = reportData ?? string.Empty;
             string[] codeLines = reportData.Split(new string[] { "\n" }, StringSplitOptions.None);
+            //now I can parse here
+            List<List<string>> myTags = HTMLParser.Parse(reportData);
+
             if (ModelState.IsValid)
             {
                 CodeElement codeElement = new CodeElement()
@@ -87,7 +91,7 @@ namespace codeParticles_Full.Controllers
                 db.CodeElements.Add(codeElement);
                 db.SaveChanges();
             }
-            return Json(codeLines);
+            return Json(myTags);
         }
     }
 }
