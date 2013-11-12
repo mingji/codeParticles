@@ -6,11 +6,20 @@ using System.Web.Mvc;
 using System.IO;
 using System.Net;
 using System.Text;
+using CodeParticles.DataModels;
+using CodeParticles.DataModels.Models;
 
 namespace codeParticles_Full.Controllers
 {
     public class downloadController : Controller
     {
+        CodeParticleContext db;
+        public downloadController()
+        {
+            db = new CodeParticleContext();
+        }
+
+
         //[ValidateInput(false)]
         //[HttpPost]
         //public ActionResult Post(string reportData)
@@ -62,5 +71,23 @@ namespace codeParticles_Full.Controllers
         //    return File(test, "text/html", "TempFile.html");
         //}
 
+        [ValidateInput(false)]
+        [HttpPost]
+        public ActionResult Upload(string reportData)//, string fileName
+        {
+            reportData = reportData ?? string.Empty;
+            string[] codeLines = reportData.Split(new string[] { "\n" }, StringSplitOptions.None);
+            if (ModelState.IsValid)
+            {
+                CodeElement codeElement = new CodeElement()
+                {
+                    Created = DateTime.Now,
+                    Text = reportData
+                };
+                db.CodeElements.Add(codeElement);
+                db.SaveChanges();
+            }
+            return Json(codeLines);
+        }
     }
 }
